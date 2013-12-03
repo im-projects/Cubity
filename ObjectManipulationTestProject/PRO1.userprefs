@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MouseMoveZInput.cs">
+    <Files>
+      <File FileName="Assets\MouseMoveXInput.cs" Line="45" Column="25" />
+      <File FileName="Assets\MouseMoveYInput.cs" Line="45" Column="52" />
+      <File FileName="Assets\MouseMoveZInput.cs" Line="52" Column="4" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
