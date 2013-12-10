@@ -10,8 +10,8 @@ public class MouseMoveZInput : MonoBehaviour {
 	private Vector3 screenOffset;
 	private Vector3 curScreenPosition;
 	private Vector3 firstScreenPoint;
-	private float factorx = 0.05f;
-	private float factory = 0.05f;
+//	private float factorx = 0.05f;
+//	private float factory = 0.05f;
 	public BoxTranslateZ boxTranslateScript;
 	
 	// Use this for initialization

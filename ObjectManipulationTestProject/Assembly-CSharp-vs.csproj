@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\BoxRotateX.cs" />
      <Compile Include="Assets\BoxScale.cs" />
      <Compile Include="Assets\BoxTranslateX.cs" />
      <Compile Include="Assets\BoxTranslateY.cs" />
@@ -53,6 +54,7 @@
      <Compile Include="Assets\MouseMoveXInput.cs" />
      <Compile Include="Assets\MouseMoveYInput.cs" />
      <Compile Include="Assets\MouseMoveZInput.cs" />
+     <Compile Include="Assets\MouseRotateXInput.cs" />
      <Compile Include="Assets\MouseScaleInput.cs" />
      <Compile Include="Assets\MoveCameraAndroidScript.cs" />
      <Compile Include="Assets\MoveCameraScript.cs" />
