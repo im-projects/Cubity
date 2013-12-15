@@ -51,6 +51,7 @@
      <Compile Include="Assets\BoxTranslateX.cs" />
      <Compile Include="Assets\BoxTranslateY.cs" />
      <Compile Include="Assets\BoxTranslateZ.cs" />
+     <Compile Include="Assets\CameraCubeMovement.cs" />
      <Compile Include="Assets\MouseMoveXInput.cs" />
      <Compile Include="Assets\MouseMoveYInput.cs" />
      <Compile Include="Assets\MouseMoveZInput.cs" />
