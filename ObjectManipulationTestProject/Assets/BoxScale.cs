@@ -4,6 +4,8 @@ using System.Collections;
 public class BoxScale : MonoBehaviour {
 
 	public bool isSelected = false;
+	public float MaxScaleInPercent = 200.0f; //doppelt so groß
+	public float MinScaleInPercent = 50.0f; //halb so groß
 	Vector3 initialScale;
 	private float currentScale;
 	
@@ -22,13 +24,13 @@ public class BoxScale : MonoBehaviour {
 			Vector3 newScale = transform.localScale*scaleFactor;
 			currentScale *= scaleFactor;
 			//beschränkung skalierung hardcoded, später mit variablen
-			if(currentScale < 0.1f) {
-				newScale = initialScale*0.1f;
-				currentScale = 0.1f;
+			if(currentScale < (MinScaleInPercent/100)) {
+				newScale = initialScale*(MinScaleInPercent/100);
+				currentScale = (MinScaleInPercent/100);
 			}
-			if(currentScale > 10.0f) {
-				newScale = initialScale*10.0f;
-				currentScale = 10.0f;
+			if(currentScale > (MaxScaleInPercent/100)) {
+				newScale = initialScale*(MaxScaleInPercent/100);
+				currentScale = (MaxScaleInPercent/100);
 			}
 			transform.localScale = newScale;
 		}
