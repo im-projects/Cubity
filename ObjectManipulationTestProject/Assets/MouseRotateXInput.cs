@@ -68,9 +68,19 @@ public class MouseRotateXInput : MonoBehaviour {
 			currentDir = curScreenPoint - firstPosition;
 			Quaternion newRotation = Quaternion.LookRotation (currentDir) * offsetRotation * originalRotation;
 
-			//newRotation.x = originalRotation.x;
-			newRotation.y = originalRotation.y;
-			newRotation.z = originalRotation.z;
+
+			if(boxRotateScript.rotationAxis == 0) { //x axis rotation
+				newRotation.y = originalRotation.y;
+				newRotation.z = originalRotation.z;
+			}
+			else if(boxRotateScript.rotationAxis == 1) { //y axis rotation
+				newRotation.x = originalRotation.x;
+				newRotation.z = originalRotation.z;
+			}
+			else { //z axis rotation
+				newRotation.x = originalRotation.x;
+				newRotation.y = originalRotation.y;
+			}
 		
 			transform.rotation = newRotation;
 

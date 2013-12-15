@@ -3,6 +3,7 @@ using System.Collections;
 
 public class BoxRotateX : MonoBehaviour {
 
+	public int rotationAxis = 0; //0 is x axis, 1 is y axis, 2 and rest is z axis
 	public bool isSelected = false;
 	
 	// Use this for initialization
