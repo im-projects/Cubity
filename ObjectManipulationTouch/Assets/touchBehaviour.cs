@@ -20,7 +20,7 @@ public class touchBehaviour : MonoBehaviour {
 	void Update () {
 		foreach (Touch touch in Input.touches) {
 			if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Stationary) {
-				while(selectedObj == null) {
+				if(selectedObj == null) {
 					Ray ray = Camera.main.ScreenPointToRay (touch.position);
 					RaycastHit hit;
 					//ray intersects any collider
