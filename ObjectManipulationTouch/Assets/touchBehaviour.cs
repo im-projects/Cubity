@@ -20,19 +20,20 @@ public class touchBehaviour : MonoBehaviour {
 	void Update () {
 		foreach (Touch touch in Input.touches) {
 			if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Stationary) {
-
-				Ray ray = Camera.main.ScreenPointToRay (touch.position);
-				RaycastHit hit;
-				//ray intersects any collider
-				if (Physics.Raycast (ray, out hit)) {
-					//ray hits rigidbody
-					if (hit.rigidbody != null) {
-						print ("box selected");
-						selectedObj = hit.rigidbody.gameObject;
-						initSelection();
-					}
-					else {
-						//TODO: impl movement of player
+				while(selectedObj == null) {
+					Ray ray = Camera.main.ScreenPointToRay (touch.position);
+					RaycastHit hit;
+					//ray intersects any collider
+					if (Physics.Raycast (ray, out hit)) {
+						//ray hits rigidbody
+						if (hit.rigidbody != null) {
+							print ("box selected");
+							selectedObj = hit.rigidbody.gameObject;
+							initSelection();
+						}
+						else {
+							//TODO: impl movement of player
+						}
 					}
 				} 
 				
