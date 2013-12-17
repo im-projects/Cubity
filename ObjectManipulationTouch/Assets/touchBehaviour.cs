@@ -38,7 +38,7 @@ public class touchBehaviour : MonoBehaviour {
 				} 
 				
 			} else if (touch.phase == TouchPhase.Moved) {
-				initMove();
+				initMove(touch);
 				print ("box moved");
 			} else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled) {
 				releaseSelection();
@@ -58,34 +58,38 @@ public class touchBehaviour : MonoBehaviour {
 		print ("select color chosen");
 	}
 
-	public void initMove() {
+	public void initMove(Touch touch) {
 		if(selectedObj.tag == "moveX") {
-			curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+
+			curScreenPoint = new Vector3(touch.position.x, touch.position.y, screenPoint.z);
 			curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
 			float xOffset = curPosition.x - firstPosition.x;
 			print ("XOffset " + xOffset);
-			translate(xOffset, selectedObj.tag);
+			Vector3 newPos = new Vector3(selectedObj.transform.position.x + xOffset, selectedObj.transform.position.y, selectedObj.transform.position.z);
+			selectedObj.transform.position = newPos;
 			firstPosition.x += xOffset;
-			
+
 		} else if(selectedObj.tag == "moveY") {
-			curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+			curScreenPoint = new Vector3(touch.position.x, touch.position.y, screenPoint.z);
 			curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
 			float yOffset = curPosition.y - firstPosition.y;
 			print ("YOffset " + yOffset);
-			translate(yOffset, selectedObj.tag);
+			Vector3 newPos = new Vector3(selectedObj.transform.position.x, selectedObj.transform.position.y + yOffset, selectedObj.transform.position.z);
+			selectedObj.transform.position = newPos;
 			firstPosition.y += yOffset;
 			
 		} else if(selectedObj.tag == "moveZ") {
-			curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
+			curScreenPoint = new Vector3(touch.position.x, touch.position.y, screenPoint.z);
 			curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint);
 			float zOffset = curPosition.z - firstPosition.z;
 			print ("ZOffset " + zOffset);
-			translate(zOffset, selectedObj.tag);
+			Vector3 newPos = new Vector3(selectedObj.transform.position.x, selectedObj.transform.position.y, selectedObj.transform.position.z + zOffset);
+			selectedObj.transform.position = newPos;
 			firstPosition.z += zOffset;
 		}
 
 	}
-
+	/*
 	public void translate(float offset, string tag) {
 		//if(isSelected){
 			Vector3 newPosition = transform.position;
@@ -99,6 +103,7 @@ public class touchBehaviour : MonoBehaviour {
 			selectedObj.transform.position = newPosition;
 		//}
 	}
+	*/
 
 	public void releaseSelection() {
 		print ("release selection");
