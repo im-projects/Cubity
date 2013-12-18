@@ -53,19 +53,30 @@ public class touchBehaviour : MonoBehaviour {
 	public void initMove(Touch touch) {
 		if (selectedObj != null) {
 			if (selectedObj.tag == "moveX") {
-					float deltaPos = touch.deltaPosition.x / 10;
-					selectedObj.transform.Translate (Vector3.right * deltaPos, Space.Self);
+				float deltaPos = touch.deltaPosition.x / 20;
+				selectedObj.transform.Translate (Vector3.right * deltaPos, Space.Self);
 
 			} else if (selectedObj.tag == "moveY") {
-					float deltaPos = touch.deltaPosition.y / 10;
-					selectedObj.transform.Translate (Vector3.up * deltaPos, Space.Self);
+				float deltaPos = touch.deltaPosition.y / 20;
+				selectedObj.transform.Translate (Vector3.up * deltaPos, Space.Self);
 
 			} else if (selectedObj.tag == "moveZ") {
+				float deltaPos = touch.deltaPosition.y / 20;
+				selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
 
-					float deltaPos = touch.deltaPosition.y / 10;
-					selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
+			} else if (selectedObj.tag == "rotate") {
+				float deltaPos = touch.deltaPosition.y;
+				selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
+
+			} else if (selectedObj.tag == "scale") {
+				if(touch.deltaPosition.y > touch.deltaPosition.x) {
+					selectedObj.transform.localScale += new Vector3(0, 0.1F, 0);
+				} else {
+					selectedObj.transform.localScale += new Vector3(0.1F, 0, 0);
+				}
+
 			} else {
-					print ("obj has no tag");
+				print ("obj has no tag");
 			}
 		}
 	}
