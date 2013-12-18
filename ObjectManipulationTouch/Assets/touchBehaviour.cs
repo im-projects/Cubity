@@ -53,15 +53,15 @@ public class touchBehaviour : MonoBehaviour {
 	public void initMove(Touch touch) {
 		if (selectedObj != null) {
 			if (selectedObj.tag == "moveX") {
-				float deltaPos = touch.deltaPosition.x / 50;
+				float deltaPos = touch.deltaPosition.x / 80;
 				selectedObj.transform.Translate (Vector3.right * deltaPos, Space.Self);
 
 			} else if (selectedObj.tag == "moveY") {
-				float deltaPos = touch.deltaPosition.y / 50;
+				float deltaPos = touch.deltaPosition.y / 80;
 				selectedObj.transform.Translate (Vector3.up * deltaPos, Space.Self);
 
 			} else if (selectedObj.tag == "moveZ") {
-				float deltaPos = touch.deltaPosition.y / 50;
+				float deltaPos = touch.deltaPosition.y / 80;
 				selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
 
 			} else if (selectedObj.tag == "rotate") {
