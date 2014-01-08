@@ -178,6 +178,7 @@ public class LevelDesignerEditor : Editor {
 			quat.eulerAngles = theScript.rotation;
 			GameObject go = (GameObject) GameObject.Instantiate(theScript.prefab,pos,quat);
 			go.name = name;
+			go.transform.parent = theScript.GetTileContainer().transform;
 		}
 	}
 	

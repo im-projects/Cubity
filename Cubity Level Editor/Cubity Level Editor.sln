@@ -9,6 +9,8 @@ Project("{2544BCC8-5974-96C6-2825-7B19888B51C8}") = "Cubity Level Editor", "Asse
 EndProject
 Project("{2544BCC8-5974-96C6-2825-7B19888B51C8}") = "Cubity Level Editor", "Assembly-UnityScript-firstpass.unityproj", "{ADEB626B-4D79-0687-4C70-E62544CBD399}"
 EndProject
+Project("{2544BCC8-5974-96C6-2825-7B19888B51C8}") = "Cubity Level Editor", "Assembly-UnityScript.unityproj", "{6086881E-F7C2-3A3E-D75A-03006B1B8D68}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,11 +33,15 @@ Global
 		{ADEB626B-4D79-0687-4C70-E62544CBD399}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADEB626B-4D79-0687-4C70-E62544CBD399}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADEB626B-4D79-0687-4C70-E62544CBD399}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6086881E-F7C2-3A3E-D75A-03006B1B8D68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6086881E-F7C2-3A3E-D75A-03006B1B8D68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6086881E-F7C2-3A3E-D75A-03006B1B8D68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6086881E-F7C2-3A3E-D75A-03006B1B8D68}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-												GlobalSection(MonoDevelopProperties) = preSolution
+																						GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
