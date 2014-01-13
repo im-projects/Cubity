@@ -3,10 +3,19 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
-	private GameObject selectedObj = null;	
+	private GameObject selectedObj = null;
+	private GameManager gameManager;
+
+	void Start()
+	{
+		gameManager = this.GetComponent<GameManager>();
+		if(gameManager == null) Debug.LogWarning("GameManager not found!");
+	}
 
 	// Update is called once per frame
 	void Update () {
+		if(gameManager.m_gameIsPaused) return;
+
 		foreach (Touch touch in Input.touches) {
 			if (touch.phase == TouchPhase.Began) {
 				Debug.Log (touch.phase);

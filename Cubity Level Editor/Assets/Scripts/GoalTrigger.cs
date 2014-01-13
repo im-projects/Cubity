@@ -3,11 +3,19 @@ using System.Collections;
 
 public class GoalTrigger : MonoBehaviour {
 
+	private GameManager m_gameManager;
+
+	void Start()
+	{
+		m_gameManager = GameObject.Find ("GameManager").GetComponent<GameManager>() as GameManager;
+		if(m_gameManager == null) Debug.LogWarning("GameManager not found");
+	}
+
 	void OnTriggerEnter(Collider theCollider)
 	{
 		if(theCollider.gameObject.tag.Equals("Player"))
 		{
-			Debug.Log ("Player has reached the Goal Area");
+			m_gameManager.LoadNextLevel();
 		}
 	}
 }

@@ -53,6 +53,7 @@
      <Compile Include="Assets\GUI\Scripts\GUI_Manager.cs" />
      <Compile Include="Assets\LevelDesigner\LevelDesigner.cs" />
      <Compile Include="Assets\Scripts\CubeManager.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\GoalTrigger.cs" />
      <Compile Include="Assets\Scripts\InputManager.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
