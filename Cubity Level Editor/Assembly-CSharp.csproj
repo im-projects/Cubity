@@ -52,10 +52,9 @@
      <Compile Include="Assets\GUI\Scripts\GUI_Layer.cs" />
      <Compile Include="Assets\GUI\Scripts\GUI_Manager.cs" />
      <Compile Include="Assets\LevelDesigner\LevelDesigner.cs" />
-     <Compile Include="Assets\Scripts\BoxTranslateY.cs" />
+     <Compile Include="Assets\Scripts\CubeManager.cs" />
      <Compile Include="Assets\Scripts\GoalTrigger.cs" />
-     <Compile Include="Assets\Scripts\MinecraftTerrain.cs" />
-     <Compile Include="Assets\Scripts\MouseMoveYInput.cs" />
+     <Compile Include="Assets\Scripts\InputManager.cs" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Vertex Colored Shaders\Mobile Transparent Vertex Color.shader" />
