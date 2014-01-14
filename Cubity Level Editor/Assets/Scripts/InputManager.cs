@@ -66,15 +66,15 @@ public class InputManager : MonoBehaviour {
 		switch (selectedObj.GetComponent<CubeManager>().cubeType)
 		{
 		case CubeManager.ECubeType.TRANSLATE_X:
-			deltaPos = touch.deltaPosition.x / 80;
+			deltaPos = touch.deltaPosition.x / 40;
 			selectedObj.transform.Translate (Vector3.right * deltaPos, Space.Self);
 			break;
 		case CubeManager.ECubeType.TRANSLATE_Y:
-			deltaPos = touch.deltaPosition.y / 80;
+			deltaPos = touch.deltaPosition.y / 40;
 			selectedObj.transform.Translate (Vector3.up * deltaPos, Space.Self);
 			break;
 		case CubeManager.ECubeType.TRANSLATE_Z:
-			deltaPos = touch.deltaPosition.y / 80;
+			deltaPos = touch.deltaPosition.x / 40;
 			selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
 			break;
 		case CubeManager.ECubeType.ROTATE_X:
@@ -82,12 +82,12 @@ public class InputManager : MonoBehaviour {
 			selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
 			break;
 		case CubeManager.ECubeType.ROTATE_Y:
-			deltaPos = touch.deltaPosition.y;
-			selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
+			deltaPos = touch.deltaPosition.x;
+			selectedObj.transform.Rotate (Vector3.up * -deltaPos, Space.Self);
 			break;
 		case CubeManager.ECubeType.ROTATE_Z:
 			deltaPos = touch.deltaPosition.y;
-			selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
+			selectedObj.transform.Rotate (Vector3.forward * deltaPos, Space.Self);
 			break;
 		case CubeManager.ECubeType.SCALE_X:
 			if(touch.deltaPosition.y > touch.deltaPosition.x) {
