@@ -4,6 +4,9 @@ using System.Collections;
 public class multiTouchBehaviour : MonoBehaviour {
 
 	private GameObject selectedObj = null;
+	//private Touch t0 = null;
+	//private Touch t1 = null;
+	private bool pinch = false;
 
 	// Use this for initialization
 	void Start () {
@@ -15,26 +18,38 @@ public class multiTouchBehaviour : MonoBehaviour {
 		foreach (Touch touch in Input.touches) {
 			//singleTouch
 			if(Input.touchCount == 1) {
-				/*
-				 * doubleclick selects obj
-				 */
-				if(touch.tapCount == 2) {
-					print("taps: " + touch.tapCount);
-					sendRay(touch);
-				}
+				print("taps: " + touch.tapCount);
+				sendRay(touch, touch.tapCount);
 
-				//singleTouchGesture
-				else if(selectedObj != null) {
+				//singleTouchGesture: moveX, moveY, moveZ, rotate
+				if(selectedObj != null) {
 					print ("single touch gesture init");
 					singleTouchGesture(touch);
 				}
 			} //end singleTouch
 
-			//multiTouchGesture
+			//multiTouchGesture: scale, jump
 			if(Input.touchCount == 2) {
 				print("no of touches: " + Input.touchCount);
 				Touch t0 = Input.GetTouch(0);
 				Touch t1 = Input.GetTouch(1);
+
+				//no obj selected: character/camera action
+				if(selectedObj == null) {
+					//TODO implement
+					//2 fingers parallel to make character jump
+					if(t0.deltaPosition.y > t0.deltaPosition.x && t1.deltaPosition.y > t1.deltaPosition.x) {
+						print("JUMP");
+					}
+
+					checkPinch(t0, t1);
+					//pinch for camera zoom
+					if(pinch) {
+						print("CAMERA ZOOM");
+					}
+				}
+
+				//obj action
 				if(selectedObj != null && (t0.phase == TouchPhase.Moved || t1.phase == TouchPhase.Moved)) {
 					//TODO desired behaviour?
 					print ("2 touch gesture init");
@@ -45,7 +60,7 @@ public class multiTouchBehaviour : MonoBehaviour {
 		} //end foreach touch()
 	} //end update()
 
-	public void sendRay(Touch touch) {
+	public void sendRay(Touch touch, int tapCount) {
 		releaseSelection ();
 		Ray ray = Camera.main.ScreenPointToRay (touch.position);
 		RaycastHit hit;
@@ -59,12 +74,21 @@ public class multiTouchBehaviour : MonoBehaviour {
 				initSelection();
 			}
 			else {
-				movePlayer();
+				/*
+				 * doubleclick selects obj
+				 */
+				if(tapCount == 1) {
+					movePlayer();
+				}
 			}
 		}
 	}
 
 	public void movePlayer() {
+		//TODO implement
+	}
+
+	public void jump() {
 		//TODO implement
 	}
 
@@ -87,38 +111,59 @@ public class multiTouchBehaviour : MonoBehaviour {
 	public void twoTouchGesture(Touch t0, Touch t1) {
 		//TODO check if fingers are above obj; OTHERWISE move camera
 		string tag = selectedObj.tag;
-			
-		if (tag == "rotate") {
+
+		if (tag == "scale") {
+			if (t0.deltaPosition.y > t0.deltaPosition.x) {
+				selectedObj.transform.localScale += new Vector3 (0, 0.1F, 0);
+			} else {
+				selectedObj.transform.localScale += new Vector3 (0.1F, 0, 0);
+			}
+
+		} else if (tag == "rotate2Touch") {
 			float deltaPos = t0.deltaPosition.y;
 			selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
-			
-		} else if (tag == "scale") {
-			if(t0.deltaPosition.y > t0.deltaPosition.x) {
-				selectedObj.transform.localScale += new Vector3(0, 0.1F, 0);
-			} else {
-				selectedObj.transform.localScale += new Vector3(0.1F, 0, 0);
-			}
+
 			
 		} else {
 			print ("ERROR: obj does not react on multitouch");
 		}
 	}
+
+	public void checkPinch(Touch t0, Touch t1) {
+		//TODO differentiate pinch together and pinch farthener
+		//TODO on touchPhase End -> release; pinch = false;
+		float prevDistance = Vector2.Distance (t0.position - t0.deltaPosition, t1.position - t1.deltaPosition);
+		float currDistance = Vector2.Distance (t0.position, t1.position);
+
+		if (prevDistance < currDistance) {
+			print ("fingers moving apart");
+		}
+		if (currDistance < prevDistance) {
+			print ("fingers moving together");
+		}
+		//else: distance bleibt gleich: parallele bewegung
+	}
 	
 	public void singleTouchGesture(Touch touch) {
 		string tag = selectedObj.tag;
+		float deltaPos;
 		if (selectedObj != null) {
 			if (tag == "moveX") {
-				float deltaPos = touch.deltaPosition.x / 80;
+				deltaPos = touch.deltaPosition.x / 80;
 				selectedObj.transform.Translate (Vector3.right * deltaPos, Space.Self);
 				
 			} else if (tag == "moveY") {
-				float deltaPos = touch.deltaPosition.y / 80;
+				deltaPos = touch.deltaPosition.y / 80;
 				selectedObj.transform.Translate (Vector3.up * deltaPos, Space.Self);
 				
 			} else if (tag == "moveZ") {
-				float deltaPos = touch.deltaPosition.y / 80;
+				deltaPos = touch.deltaPosition.y / 80;
 				selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
-				
+			
+			} else if (tag == "rotate1Touch") {
+				deltaPos = touch.deltaPosition.y;
+				selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
+					
 			} else {
 				print ("ERROR: obj does not react on single touch");
 			}
