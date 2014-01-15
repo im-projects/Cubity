@@ -4,8 +4,12 @@ using System.Collections;
 public class CubeManager : MonoBehaviour {
 	
 	public ECubeType cubeType = ECubeType.NONE;
-	public Material materialNormal;
-	public Material materialSelected;
+	public Material materialX;
+	public Material materialXActive;
+	public Material materialY;
+	public Material materialYActive;
+	public Material materialZ;
+	public Material materialZActive;
 
 	private bool isSelected = false;
 	
@@ -32,14 +36,14 @@ public class CubeManager : MonoBehaviour {
 	{
 		Transform[] children = GetComponentsInChildren<Transform> ();
 		foreach (Transform child in children) {
-			if (
-				child.gameObject.name.Equals ("plane_north") || 
-				child.gameObject.name.Equals ("plane_east") || 
-				child.gameObject.name.Equals ("plane_south") || 
-				child.gameObject.name.Equals ("plane_west")
-				) 
-			{
-				child.gameObject.renderer.material = (isSelected) ? materialSelected : materialNormal;
+			if (child.gameObject.name.Equals ("plane_east") || child.gameObject.name.Equals ("plane_west")){
+				child.gameObject.renderer.material = (isSelected) ? materialXActive : materialX;
+			}
+			if (child.gameObject.name.Equals ("plane_top") || child.gameObject.name.Equals ("plane_bottom")){
+				child.gameObject.renderer.material = (isSelected) ? materialYActive : materialY;
+			}
+			if (child.gameObject.name.Equals ("plane_north") || child.gameObject.name.Equals ("plane_south")){
+				child.gameObject.renderer.material = (isSelected) ? materialZActive : materialZ;
 			}
 		}
 	}

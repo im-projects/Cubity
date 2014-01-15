@@ -112,7 +112,8 @@ public class multiTouchBehaviour : MonoBehaviour {
 		//TODO check if fingers are above obj; OTHERWISE move camera
 		string tag = selectedObj.tag;
 
-		if (tag == "scale") {
+		if (tag == "scale" && pinch == true) {
+			print("PINCH SCALE");
 			if (t0.deltaPosition.y > t0.deltaPosition.x) {
 				selectedObj.transform.localScale += new Vector3 (0, 0.1F, 0);
 			} else {
