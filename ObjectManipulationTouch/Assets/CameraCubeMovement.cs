@@ -26,6 +26,7 @@ public class CameraCubeMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		//rotate player (camera)
 		if (Input.GetMouseButton(1)){
 			rotationX += Input.GetAxis("Mouse X") * cameraSensitivity * Time.deltaTime;
 			//rotationY += Input.GetAxis("Mouse Y") * cameraSensitivity * Time.deltaTime;
@@ -49,6 +50,7 @@ public class CameraCubeMovement : MonoBehaviour {
 
 		//walk with clicking
 		targetPosition = transform.position; //for only walking when clicking - stop on end of click
+		//TODO only walk when nothing selected!!
 		if(Input.GetMouseButton(0))
 		{
 			Plane playerPlane = new Plane(Vector3.up, transform.position);
@@ -57,22 +59,28 @@ public class CameraCubeMovement : MonoBehaviour {
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit)) {
 				if(hit.collider != null) {
-					if(hit.collider.gameObject.tag == "floor"){ 
+					targetPosition = hit.point;
+					//if(hit.collider.gameObject.tag == "floor"){ 
 						//to use on top of cubes cubes need floor on top!!!
-						if (playerPlane.Raycast (ray, out hitdist)) {
-							Vector3 targetPoint = ray.GetPoint(hitdist);
+						/*if (playerPlane.Raycast (ray, out hitdist)) {
+							//Vector3 targetPoint = ray.GetPoint(hitdist);
 							targetPosition = ray.GetPoint(hitdist);
 							//targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
 							//transform.rotation = targetRotation;
-						}
-					}
+						}*/
+					//}
 				}
 			}
 		}
-
+		float dist = Vector3.Distance(transform.position, targetPosition);
+		float currMoveSpeed = (normalMoveSpeed * Time.deltaTime) / dist;
 		//transform.localRotation = Quaternion.Lerp (transform.rotation, targetRotation, Time.deltaTime * normalMoveSpeed);
-		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * normalMoveSpeed/5);
 
+		float fixedY = transform.position.y;
+		transform.position = Vector3.Lerp (transform.position, targetPosition, currMoveSpeed);
+		Vector3 yFix = transform.position;
+		yFix.y = fixedY;
+		transform.position = yFix;
 
 		//Jump
 		if(currentJump > 6.5f) {
@@ -86,11 +94,15 @@ public class CameraCubeMovement : MonoBehaviour {
 		//transform.position += transform.forward * normalMoveSpeed * Input.GetAxis("Vertical") * Time.deltaTime;
 		//transform.position += transform.right * normalMoveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime;
 	
+
+		//TODO check ray downwards for grounding
 	}
 
+
+	//grounding and other collsion stuff
 	void OnCollisionEnter (Collision col)
 	{
-		if(col.gameObject.name != "wall")
+		if(col.gameObject.tag != "wall") //if grounding works with ray - delete this
 		{
 			print ("Grounded");
 			isGrounded = true;
