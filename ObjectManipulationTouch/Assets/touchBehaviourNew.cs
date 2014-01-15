@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class touchBehaviour : MonoBehaviour {
+public class touchBehaviourNew : MonoBehaviour {
 	
 	private GameObject selectedObj = null;
 	
