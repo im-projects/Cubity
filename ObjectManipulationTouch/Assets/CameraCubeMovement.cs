@@ -16,9 +16,12 @@ public class CameraCubeMovement : MonoBehaviour {
 
 	private bool isGrounded = true;
 
+	ClimbScript climbScript;
+
 	// Use this for initialization
 	void Start () {
 		targetPosition = transform.position;
+		climbScript = transform.Find("ClimbColliderObject").GetComponent<ClimbScript>();
 	}
 	
 	// Update is called once per frame
@@ -79,6 +82,16 @@ public class CameraCubeMovement : MonoBehaviour {
 			if(currentJump <= 6.5f) {
 				print ("Stop Jumping");
 			}
+		}
+
+		//Climb
+		if(climbScript.isClimbing() == true) {
+			transform.Translate(Vector3.up * jumpForce * Time.deltaTime);
+			climbScript.changeHeight(1);
+		}
+		if(climbScript.isEndClimb() == true) {
+			transform.Translate(Vector3.forward * jumpForce * Time.deltaTime);
+			climbScript.changeForward(1);
 		}
 
 		//TODO check ray downwards for grounding
