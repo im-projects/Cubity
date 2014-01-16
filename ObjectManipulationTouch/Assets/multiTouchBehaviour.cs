@@ -7,6 +7,8 @@ public class multiTouchBehaviour : MonoBehaviour {
 	//private Touch t0 = null;
 	//private Touch t1 = null;
 	private bool pinch = false;
+	private bool pinchUp = false;
+	private bool pinchDown = false;
 
 	// Use this for initialization
 	void Start () {
@@ -53,7 +55,14 @@ public class multiTouchBehaviour : MonoBehaviour {
 				if(selectedObj != null && (t0.phase == TouchPhase.Moved || t1.phase == TouchPhase.Moved)) {
 					//TODO desired behaviour?
 					print ("2 touch gesture init");
+					print ("pinch = " + pinch);
 					twoTouchGesture(t0, t1);
+				}
+
+				if (t0.phase == TouchPhase.Ended || t1.phase == TouchPhase.Ended) {
+					pinch = false;
+					pinchUp = false;
+					pinchDown = false;
 				}
 			}
 
@@ -70,10 +79,15 @@ public class multiTouchBehaviour : MonoBehaviour {
 			//rigidbody should be used when obj is moving
 			if (hit.rigidbody != null) {
 				print ("box selected");
-				selectedObj = hit.rigidbody.gameObject;
-				initSelection();
+				if(tapCount == 2) {
+					selectedObj = hit.rigidbody.gameObject;
+					initSelection();
+				}
 			}
 			else {
+				if(selectedObj != null) {
+					selectedObj = null;
+				}
 				/*
 				 * doubleclick selects obj
 				 */
@@ -111,13 +125,32 @@ public class multiTouchBehaviour : MonoBehaviour {
 	public void twoTouchGesture(Touch t0, Touch t1) {
 		//TODO check if fingers are above obj; OTHERWISE move camera
 		string tag = selectedObj.tag;
+		checkPinch (t0, t1);
 
 		if (tag == "scale" && pinch == true) {
 			print("PINCH SCALE");
-			if (t0.deltaPosition.y > t0.deltaPosition.x) {
-				selectedObj.transform.localScale += new Vector3 (0, 0.1F, 0);
-			} else {
+			if(pinchUp) {
+				//scale up
 				selectedObj.transform.localScale += new Vector3 (0.1F, 0, 0);
+				/*
+				if (t0.deltaPosition.y > t0.deltaPosition.x) {
+					selectedObj.transform.localScale += new Vector3 (0, 0.1F, 0);
+				} else {
+					selectedObj.transform.localScale += new Vector3 (0.1F, 0, 0);
+				}
+				*/
+			} else if(pinchDown) {
+				//scale down
+				selectedObj.transform.localScale += new Vector3 (-0.1F, 0, 0);
+				/*
+				if (t0.deltaPosition.y > t0.deltaPosition.x) {
+					selectedObj.transform.localScale += new Vector3 (0, -0.1F, 0);
+				} else {
+					selectedObj.transform.localScale += new Vector3 (-0.1F, 0, 0);
+				}
+				*/
+			} else { 
+				print ("unknown pinch");
 			}
 
 		} else if (tag == "rotate2Touch") {
@@ -137,12 +170,16 @@ public class multiTouchBehaviour : MonoBehaviour {
 		float currDistance = Vector2.Distance (t0.position, t1.position);
 
 		if (prevDistance < currDistance) {
+			pinch = true;
+			pinchUp = true;
 			print ("fingers moving apart");
-		}
-		if (currDistance < prevDistance) {
+		} else if (currDistance < prevDistance) {
+			pinch = true;
+			pinchDown = true;
 			print ("fingers moving together");
+		} else {
+			print ("no pinch");
 		}
-		//else: distance bleibt gleich: parallele bewegung
 	}
 	
 	public void singleTouchGesture(Touch touch) {
@@ -170,4 +207,39 @@ public class multiTouchBehaviour : MonoBehaviour {
 			}
 		}
 	}
+	/*
+	Vector3 screenPoint;
+	Vector3 curScreenPoint;
+	Vector3 boxCenterPoint;
+	float oldDistance;
+	public float MaxScaleInPercent = 200.0f; //doppelt so groß
+	public float MinScaleInPercent = 50.0f; //halb so groß
+	Vector3 initialScale;
+	private float currentScale;
+	
+	private void doScale() {
+		//scale depends on drag direction -> from center bigger, to center smaller
+		//if drag goes over center it will scale according to which distance from the center is bigger
+		curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, boxCenterPoint.z);
+		float newDistance = (curScreenPoint - boxCenterPoint).magnitude;
+		float scaleDistance = newDistance - oldDistance;
+		float scaleFactor = 1;
+		scaleFactor += (scaleDistance/80);
+		
+		//boxScaleScript.scaleCube(scaleFactor);
+		Vector3 newScale = transform.localScale*scaleFactor;
+		currentScale *= scaleFactor;
+		//beschränkung skalierung hardcoded, später mit variablen
+		if(currentScale < (MinScaleInPercent/100)) {
+			newScale = initialScale*(MinScaleInPercent/100);
+			currentScale = (MinScaleInPercent/100);
+		}
+		if(currentScale > (MaxScaleInPercent/100)) {
+			newScale = initialScale*(MaxScaleInPercent/100);
+			currentScale = (MaxScaleInPercent/100);
+		}
+		transform.localScale = newScale;
+		oldDistance = newDistance;
+	}
+	*/
 }
