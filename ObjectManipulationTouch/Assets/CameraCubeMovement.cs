@@ -84,10 +84,10 @@ public class CameraCubeMovement : MonoBehaviour {
 			}
 		}
 
-		//Climb
+		//Climb TODO stop other movements while climbing??
 		if(climbScript.isClimbing() == true) {
 			transform.Translate(Vector3.up * jumpForce * Time.deltaTime);
-			climbScript.changeHeight(1);
+			//climbScript.changeHeight(1);
 		}
 		if(climbScript.isEndClimb() == true) {
 			transform.Translate(Vector3.forward * jumpForce * Time.deltaTime);
