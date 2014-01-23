@@ -2,21 +2,21 @@
 using System.Collections;
 
 public class RotatePlayerAndroidScript : MonoBehaviour {
-
+	
 	public bool locked = false;
 	public float cameraSensitivity = 0.01f;
-
+	
 	private float rotationX = 0.0f;
 	private float rotationY = 0.0f;
-
+	
 	// Use this for initialization
 	void Start () {
-	
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 		/*if(locked == false) {
 			if (Input.touches.Length > 0)
 			{
@@ -36,9 +36,9 @@ public class RotatePlayerAndroidScript : MonoBehaviour {
 			}
 		}
 		*/
-	
+		
 	}
-
+	
 	public void rotatePlayer(float rotationX) {
 		transform.localRotation *= Quaternion.AngleAxis(rotationX, Vector3.up);
 	}

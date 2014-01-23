@@ -38,6 +38,6 @@ public class MoveCameraAndroidScript : MonoBehaviour {
 	}
 
 	public void rotateCamera(float rotationY) {
-		transform.localRotation *= Quaternion.AngleAxis(rotationY * 0.01f, Vector3.left);
+		transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
 	}
 }
