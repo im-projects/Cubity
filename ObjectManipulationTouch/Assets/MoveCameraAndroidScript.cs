@@ -3,12 +3,12 @@ using System.Collections;
 
 public class MoveCameraAndroidScript : MonoBehaviour {
 
-	public float sensitivityX = 5.0f;
-    public float sensitivityY = 5.0f;
- 
-    public bool invertX = false;
-    public bool invertY = false;
- 
+	public bool locked = false;
+	public float cameraSensitivity = 0.01f;
+
+	private float rotationX = 0.0f;
+	private float rotationY = 0.0f;
+
 	// Use this for initialization
 	void Start () {
  
@@ -16,18 +16,28 @@ public class MoveCameraAndroidScript : MonoBehaviour {
  
 	// Update is called once per frame
 	void Update () {
-        if (Input.touches.Length > 0)
-        {
-            if (Input.touches[0].phase == TouchPhase.Moved)
-            {
-                Vector2 delta = Input.touches[0].deltaPosition;
-                float rotationZ = delta.x * sensitivityX * Time.deltaTime;
-                rotationZ = invertX ? rotationZ : rotationZ * -1;
-                float rotationX = delta.y * sensitivityY * Time.deltaTime;
-                rotationX = invertY ? rotationX : rotationX * -1;
- 
-                transform.localEulerAngles += new Vector3(rotationX, rotationZ, 0);
-            }
+		/*if(locked == false) {
+        	if (Input.touches.Length > 0)
+        	{
+				if (Input.touches[0].phase == TouchPhase.Moved)
+            	{
+					//rotate player (camera) ONLY UP/DOWNWAYS - you can use your own code for this probably?
+					
+					//calculate rotation of the camera only up and down (screen Y axe) and use for rotating camera along X axe
+					Vector2 delta = Input.touches[0].deltaPosition;
+					rotationY = delta.y * Time.deltaTime;
+					rotationY = Mathf.Clamp (rotationY, -90, 90);
+					
+					//rotate it
+					//transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
+					transform.localRotation *= Quaternion.AngleAxis(rotationY * 0.01f, Vector3.left);
+            	}
+			}
         }
+		*/
+	}
+
+	public void rotateCamera(float rotationY) {
+		transform.localRotation *= Quaternion.AngleAxis(rotationY * 0.01f, Vector3.left);
 	}
 }

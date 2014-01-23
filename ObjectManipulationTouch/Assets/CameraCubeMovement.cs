@@ -70,7 +70,7 @@ public class CameraCubeMovement : MonoBehaviour {
 		//Jump On Space
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded) { //just use on other touch move
 			print ("Jump");
-			isGrounded = false;
+			//isGrounded = false;
 			currentJump = jumpForce;
 			//transform.Translate (Vector3.up * normalMoveSpeed * Time.deltaTime);
 		}
@@ -95,11 +95,30 @@ public class CameraCubeMovement : MonoBehaviour {
 		}
 
 		//TODO check ray downwards for grounding
+		RaycastHit hitFloor;
+		Vector3 rayDirection = new Vector3(0,-1,0);
+		float distance = 2.0f;
+		if(Physics.Raycast(transform.position,rayDirection,out hitFloor,distance)){
+			//the ray collided with something, you can interact
+			// with the hit object now by using hit.collider.gameObject
+			if(!isGrounded) {
+				isGrounded = true;
+				print ("Grounded");
+			}
+		}
+		else{
+			//nothing was below your gameObject within 10m.
+			if(isGrounded) {
+				isGrounded = false;
+				print ("not Grounded");
+			}
+		}
+
 	}
 
 
 	//grounding and other collsion stuff - can probably be left out for now
-	void OnCollisionEnter (Collision col)
+	/*void OnCollisionEnter (Collision col)
 	{
 		if(col.gameObject.tag != "wall") //if grounding works with ray - delete this
 		{
@@ -107,5 +126,5 @@ public class CameraCubeMovement : MonoBehaviour {
 			isGrounded = true;
 			targetPosition = transform.position;
 		}
-	}
+	}*/
 }
