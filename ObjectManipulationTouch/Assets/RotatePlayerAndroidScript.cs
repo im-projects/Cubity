@@ -4,10 +4,6 @@ using System.Collections;
 public class RotatePlayerAndroidScript : MonoBehaviour {
 	
 	public bool locked = false;
-	public float cameraSensitivity = 0.01f;
-	
-	private float rotationX = 0.0f;
-	private float rotationY = 0.0f;
 	
 	// Use this for initialization
 	void Start () {

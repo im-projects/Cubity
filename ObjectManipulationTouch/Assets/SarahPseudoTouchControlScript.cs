@@ -7,22 +7,24 @@ public class SarahPseudoTouchControlScript : MonoBehaviour {
 
 	public bool simulateCubes = true;
 
-	public bool simulateCamera = true;
-	public bool simulateWalkingForwardBackward = false;
+	public bool simulateCamera = false;
+	public bool simulateWalkingForwardBackward = true;
 	public bool simulateClickToWalk = false;
 	public bool simulateJump = false;
 
 	private MoveCameraAndroidScript moveCameraScript;
 	private RotatePlayerAndroidScript rotatePlayerScript;
+	private MovePlayerForwardBackwardAndroidScript movePlayerScript;
 
-	private float cameraRotationX = 0.0f;
-	private float cameraRotationY = 0.0f;
+	//private float cameraRotationX = 0.0f;
+	//private float cameraRotationY = 0.0f;
 
 	// Use this for initialization
 	void Start () {
 		//get all scripts needed
 		moveCameraScript = FindObjectOfType<MoveCameraAndroidScript>();
 		rotatePlayerScript = FindObjectOfType<RotatePlayerAndroidScript>();
+		movePlayerScript = FindObjectOfType<MovePlayerForwardBackwardAndroidScript>();
 		//moveCameraScript = GameObject.Find("MainCamera").GetComponent<MoveCameraAndroidScript>();
 		//rotatePlayerScript = GameObject.Find("CameraCube").GetComponent<RotatePlayerAndroidScript>();
 	
@@ -51,7 +53,10 @@ public class SarahPseudoTouchControlScript : MonoBehaviour {
 					}
 
 					if(simulateWalkingForwardBackward) {
+						Vector2 delta = Input.touches[0].deltaPosition;
+						float moveDistance = delta.y * Time.deltaTime;
 
+						movePlayerScript.movePlayer(moveDistance);
 					}
 
 					if(simulateJump) {
