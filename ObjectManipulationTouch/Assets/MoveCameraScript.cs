@@ -21,6 +21,7 @@ public class MoveCameraScript : MonoBehaviour {
 
 			//rotate player (camera) ONLY UP/DOWNWAYS - you can use your own code for this probably?
 
+
 			//calculate rotation of the camera only up and down (screen Y axe) and use for rotating camera along X axe
 			rotationY += Input.GetAxis("Mouse Y") * cameraSensitivity * Time.deltaTime;
 			//get axis, existing in touch? else use delta touch movement on y axe of the screen
@@ -29,6 +30,7 @@ public class MoveCameraScript : MonoBehaviour {
 			//rotate it
 			transform.localRotation = Quaternion.AngleAxis(rotationX, Vector3.up);
 			transform.localRotation *= Quaternion.AngleAxis(rotationY, Vector3.left);
+
 		}
  
 	}

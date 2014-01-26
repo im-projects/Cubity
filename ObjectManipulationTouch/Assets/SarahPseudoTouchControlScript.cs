@@ -27,6 +27,7 @@ public class SarahPseudoTouchControlScript : MonoBehaviour {
 		movePlayerScript = FindObjectOfType<MovePlayerForwardBackwardAndroidScript>();
 		//moveCameraScript = GameObject.Find("MainCamera").GetComponent<MoveCameraAndroidScript>();
 		//rotatePlayerScript = GameObject.Find("CameraCube").GetComponent<RotatePlayerAndroidScript>();
+
 	
 	}
 	

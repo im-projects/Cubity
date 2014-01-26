@@ -50,6 +50,7 @@
      <Compile Include="Assets\ClimbScript.cs" />
      <Compile Include="Assets\MoveCameraAndroidScript.cs" />
      <Compile Include="Assets\MoveCameraScript.cs" />
+     <Compile Include="Assets\MovePlayerByClickingAndroidScript.cs" />
      <Compile Include="Assets\MovePlayerForwardBackwardAndroidScript.cs" />
      <Compile Include="Assets\RotatePlayerAndroidScript.cs" />
      <Compile Include="Assets\SarahPseudoTouchControlScript.cs" />

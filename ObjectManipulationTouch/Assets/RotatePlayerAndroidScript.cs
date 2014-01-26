@@ -37,5 +37,6 @@ public class RotatePlayerAndroidScript : MonoBehaviour {
 	
 	public void rotatePlayer(float rotationX) {
 		transform.localRotation *= Quaternion.AngleAxis(rotationX, Vector3.up);
+		//rigidbody.AddRelativeTorque(Vector3.up *50* rotationX);
 	}
 }
