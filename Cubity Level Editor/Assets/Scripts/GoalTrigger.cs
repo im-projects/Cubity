@@ -7,7 +7,7 @@ public class GoalTrigger : MonoBehaviour {
 
 	void Start()
 	{
-		m_gameManager = GameObject.Find ("GameManager").GetComponent<GameManager>() as GameManager;
+		m_gameManager = GameObject.FindGameObjectWithTag ("GameManager").GetComponent<GameManager>() as GameManager;
 		if(m_gameManager == null) Debug.LogWarning("GameManager not found");
 	}
 
