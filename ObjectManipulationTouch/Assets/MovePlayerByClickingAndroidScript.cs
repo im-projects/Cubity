@@ -3,12 +3,16 @@ using System.Collections;
 
 public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 
-	public float moveSpeed = 0.1f;
-	public float jumpForce = 1;
-	private bool isGrounded = true;
-	private Vector3 targetPosition;
-	ClimbScript climbScript;
+	public float cameraSensitivity = 90;
+	public float moveSpeed = 10;
 	
+	public float jumpForce = 10;
+	
+	private Vector3 targetPosition;
+	
+	private bool isGrounded = true;
+	
+	ClimbScript climbScript;
 	
 	// Use this for initialization
 	void Start () {
@@ -19,37 +23,38 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		//walk
-		float dist = Vector3.Distance(transform.position, targetPosition);
-		float currMoveSpeed = (moveSpeed * Time.deltaTime) / dist;
+		//walk with clicking
+		targetPosition.y = transform.position.y;
 		
-		float fixedY = transform.position.y;
-		transform.position = Vector3.Lerp (transform.position, targetPosition, currMoveSpeed);
-		Vector3 yFix = transform.position;
-		yFix.y = fixedY;
-		transform.position = yFix;
-
-
+		float dist = Vector3.Distance(transform.position, targetPosition);
+		if(dist < 1) {
+			targetPosition = transform.position;
+		}
+		else {
+			Vector3 direction = targetPosition - transform.position;
+			
+			direction = Vector3.Normalize(direction);
+			rigidbody.AddForce(direction * moveSpeed * 10);
+		}
+		
 		//Climb TODO stop other movements while climbing??
 		if(climbScript.isClimbing() == true) {
-			targetPosition = transform.position;
 			Vector3 temp = rigidbody.velocity;
 			temp.x=0;
 			temp.z=0;
 			rigidbody.velocity = temp;
 			rigidbody.AddForce(Vector3.up * jumpForce *80* Time.deltaTime);
-			//transform.Translate(Vector3.up * jumpForce * Time.deltaTime);
+			targetPosition=transform.position;
 		}
-		if(climbScript.isEndClimb() == true) {
-			targetPosition = transform.position;
+		else if(climbScript.isEndClimb() == true) {
 			rigidbody.AddRelativeForce(Vector3.forward * jumpForce *50* Time.deltaTime);
-			//transform.Translate(Vector3.forward * jumpForce * Time.deltaTime);
 			climbScript.changeForward(1);
 			
 			Vector3 temp = rigidbody.velocity;
 			temp.y = 0;
 			rigidbody.velocity = temp;
 			rigidbody.AddForce(Vector3.up * jumpForce *80* Time.deltaTime);
+			targetPosition=transform.position;
 		}
 		
 		//TODO check ray downwards for grounding
@@ -72,10 +77,19 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 			}
 		}
 		
-		
 	}
 	
 	public void movePlayer(Vector3 destination) {
-		targetPosition = destination;
+		Ray ray = Camera.main.ScreenPointToRay(destination);
+		RaycastHit hit;
+		if (Physics.Raycast (ray, out hit)) {
+			if(hit.collider != null) {
+				targetPosition = hit.point;
+			}
+		}
+	}
+
+	public void jump() {
+
 	}
 }

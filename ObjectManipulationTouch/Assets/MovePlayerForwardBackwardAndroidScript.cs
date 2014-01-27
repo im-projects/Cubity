@@ -64,4 +64,8 @@ public class MovePlayerForwardBackwardAndroidScript : MonoBehaviour {
 		//transform.Translate (Vector3.forward * moveSpeed * moveDistance);
 		rigidbody.AddRelativeForce(Vector3.forward * moveSpeed * 600 * moveDistance); //800 too bouncy >.<
 	}
+
+	public void jump() {
+
+	}
 }

@@ -15,6 +15,7 @@ public class SarahPseudoTouchControlScript : MonoBehaviour {
 	private MoveCameraAndroidScript moveCameraScript;
 	private RotatePlayerAndroidScript rotatePlayerScript;
 	private MovePlayerForwardBackwardAndroidScript movePlayerScript;
+	private MovePlayerByClickingAndroidScript moveByClickingScript;
 
 	//private float cameraRotationX = 0.0f;
 	//private float cameraRotationY = 0.0f;
@@ -25,8 +26,7 @@ public class SarahPseudoTouchControlScript : MonoBehaviour {
 		moveCameraScript = FindObjectOfType<MoveCameraAndroidScript>();
 		rotatePlayerScript = FindObjectOfType<RotatePlayerAndroidScript>();
 		movePlayerScript = FindObjectOfType<MovePlayerForwardBackwardAndroidScript>();
-		//moveCameraScript = GameObject.Find("MainCamera").GetComponent<MoveCameraAndroidScript>();
-		//rotatePlayerScript = GameObject.Find("CameraCube").GetComponent<RotatePlayerAndroidScript>();
+		moveByClickingScript = FindObjectOfType<MovePlayerByClickingAndroidScript>();
 
 	
 	}
@@ -61,12 +61,15 @@ public class SarahPseudoTouchControlScript : MonoBehaviour {
 					}
 
 					if(simulateJump) {
-
+						movePlayerScript.jump();
+						//moveByClickingScript.jump();
 					}
 				}
 
 				if(simulateClickToWalk) {
+					//Vector2 destination = Input.GetTouch(0).position;
 
+					moveByClickingScript.movePlayer(Input.mousePosition);
 				}
 			}
 		}
