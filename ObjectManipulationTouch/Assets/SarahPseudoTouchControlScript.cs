@@ -59,17 +59,16 @@ public class SarahPseudoTouchControlScript : MonoBehaviour {
 
 						movePlayerScript.movePlayer(moveDistance);
 					}
-
-					if(simulateJump) {
-						movePlayerScript.jump();
-						//moveByClickingScript.jump();
-					}
 				}
 
 				if(simulateClickToWalk) {
 					//Vector2 destination = Input.GetTouch(0).position;
-
 					moveByClickingScript.movePlayer(Input.mousePosition);
+				}
+
+				if(simulateJump) {
+					//movePlayerScript.jump();
+					moveByClickingScript.jump();
 				}
 			}
 		}

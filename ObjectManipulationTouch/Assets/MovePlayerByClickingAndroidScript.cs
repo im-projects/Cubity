@@ -4,7 +4,7 @@ using System.Collections;
 public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 
 	public float cameraSensitivity = 90;
-	public float moveSpeed = 10;
+	public float moveSpeed = 5;
 	
 	public float jumpForce = 10;
 	
@@ -27,8 +27,10 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 		targetPosition.y = transform.position.y;
 		
 		float dist = Vector3.Distance(transform.position, targetPosition);
-		if(dist < 1) {
+		if(dist < 0.5f) {
 			targetPosition = transform.position;
+			//Vector3 temp = rigidbody.velocity * 0.1f;
+			//rigidbody.velocity = temp;
 		}
 		else {
 			Vector3 direction = targetPosition - transform.position;
@@ -36,7 +38,21 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 			direction = Vector3.Normalize(direction);
 			rigidbody.AddForce(direction * moveSpeed * 10);
 		}
-		
+
+		//Climb TODO stop other movements while climbing??
+		if(climbScript.isClimbing() == true) {
+			Vector3 temp = rigidbody.velocity;
+			temp.x=0;
+			temp.z=0;
+			rigidbody.velocity = temp;
+			transform.Translate(Vector3.up * jumpForce * Time.deltaTime);
+		}
+		if(climbScript.isEndClimb() == true) {
+			transform.Translate(Vector3.forward * jumpForce * Time.deltaTime);
+			climbScript.changeForward(1);
+		}
+
+		/*
 		//Climb TODO stop other movements while climbing??
 		if(climbScript.isClimbing() == true) {
 			Vector3 temp = rigidbody.velocity;
@@ -56,11 +72,12 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 			rigidbody.AddForce(Vector3.up * jumpForce *80* Time.deltaTime);
 			targetPosition=transform.position;
 		}
+		*/
 		
 		//TODO check ray downwards for grounding
 		RaycastHit hitFloor;
 		Vector3 rayDirection = new Vector3(0,-1,0);
-		float distance = 2.0f;
+		float distance = 0.8f;
 		if(Physics.Raycast(transform.position,rayDirection,out hitFloor,distance)){
 			//the ray collided with something, you can interact
 			// with the hit object now by using hit.collider.gameObject
@@ -90,6 +107,9 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 	}
 
 	public void jump() {
-
+		if(isGrounded) {
+			rigidbody.AddForce(Vector3.up * jumpForce *800* Time.deltaTime);
+			targetPosition=transform.position;
+		}
 	}
 }
