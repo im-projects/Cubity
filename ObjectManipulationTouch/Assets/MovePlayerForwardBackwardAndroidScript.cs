@@ -40,7 +40,7 @@ public class MovePlayerForwardBackwardAndroidScript : MonoBehaviour {
 		//TODO check ray downwards for grounding
 		RaycastHit hitFloor;
 		Vector3 rayDirection = new Vector3(0,-1,0);
-		float distance = 2.0f;
+		float distance = 0.8f;
 		if(Physics.Raycast(transform.position,rayDirection,out hitFloor,distance)){
 			//the ray collided with something, you can interact
 			// with the hit object now by using hit.collider.gameObject
@@ -66,6 +66,8 @@ public class MovePlayerForwardBackwardAndroidScript : MonoBehaviour {
 	}
 
 	public void jump() {
-
+		if(isGrounded) {
+			rigidbody.AddForce(Vector3.up * jumpForce *800* Time.deltaTime);
+		}
 	}
 }

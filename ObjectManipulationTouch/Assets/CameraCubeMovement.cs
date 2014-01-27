@@ -38,15 +38,15 @@ public class CameraCubeMovement : MonoBehaviour {
 			//targetRotation = transform.localRotation;
 		}
 
+
 		//walk with wasd
-		//use this for forward/backward -> make +1 or -1 for Vertical Axis Value if it doesn't exist in touch
 		transform.Translate (Vector3.forward * normalMoveSpeed * Input.GetAxis("Vertical") * Time.deltaTime);
 		//leave out this part (for side walking)
 		//transform.Translate (Vector3.right * normalMoveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime);
 
 
 		//walk with clicking
-		targetPosition = transform.position; //for only walking when clicking - stop on end of click
+		//targetPosition = transform.position; //for only walking when clicking - stop on end of click
 		//TODO only walk when nothing selected!!
 		if(Input.GetMouseButton(0))
 		{
@@ -58,7 +58,20 @@ public class CameraCubeMovement : MonoBehaviour {
 				}
 			}
 		}
+		targetPosition.y = transform.position.y;
+		
 		float dist = Vector3.Distance(transform.position, targetPosition);
+		if(dist < 1) {
+			targetPosition = transform.position;
+		}
+		else {
+			Vector3 direction = targetPosition - transform.position;
+			
+			direction = Vector3.Normalize(direction);
+			rigidbody.AddForce(direction * normalMoveSpeed * 10);
+		}
+
+		/*float dist = Vector3.Distance(transform.position, targetPosition);
 		float currMoveSpeed = (normalMoveSpeed * Time.deltaTime) / dist;
 
 		float fixedY = transform.position.y;
@@ -66,6 +79,7 @@ public class CameraCubeMovement : MonoBehaviour {
 		Vector3 yFix = transform.position;
 		yFix.y = fixedY;
 		transform.position = yFix;
+		*/
 
 		//Jump On Space
 		if (Input.GetKeyDown (KeyCode.Space) && isGrounded) { //just use on other touch move
