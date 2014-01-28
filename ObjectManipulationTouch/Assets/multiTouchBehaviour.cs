@@ -30,9 +30,7 @@ public class multiTouchBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.touchCount == 0) {
-			singleTapActive = false;
-		} else if (Input.touchCount > 1) {
+		if (Input.touchCount > 1) {
 			performActionDoubleTouch(Input.touches);
 			return;
 		} else { // touchCount = 1
