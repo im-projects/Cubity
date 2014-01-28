@@ -27,7 +27,7 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 		targetPosition.y = transform.position.y;
 		
 		float dist = Vector3.Distance(transform.position, targetPosition);
-		if(dist < 0.5f) {
+		if(dist < 2.0f) {
 			targetPosition = transform.position;
 			//Vector3 temp = rigidbody.velocity * 0.1f;
 			//rigidbody.velocity = temp;
@@ -36,7 +36,7 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 			Vector3 direction = targetPosition - transform.position;
 			
 			direction = Vector3.Normalize(direction);
-			rigidbody.AddForce(direction * moveSpeed * 10);
+			rigidbody.AddForce(direction * moveSpeed *3);
 		}
 
 		//Climb TODO stop other movements while climbing??
