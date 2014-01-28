@@ -27,10 +27,15 @@ public class MovePlayerByClickingAndroidScript : MonoBehaviour {
 		targetPosition.y = transform.position.y;
 		
 		float dist = Vector3.Distance(transform.position, targetPosition);
-		if(dist < 2.0f) {
-			targetPosition = transform.position;
-			//Vector3 temp = rigidbody.velocity * 0.1f;
-			//rigidbody.velocity = temp;
+		if(dist < 1.0f) {
+
+			Vector3 temp = rigidbody.velocity * dist;
+			if(dist < 0.01f) {
+				temp = new Vector3 (0,0,0);
+				targetPosition = transform.position;
+			}
+			rigidbody.velocity = temp;
+
 		}
 		else {
 			Vector3 direction = targetPosition - transform.position;
