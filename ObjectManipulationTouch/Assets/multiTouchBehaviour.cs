@@ -9,6 +9,11 @@ public class multiTouchBehaviour : MonoBehaviour {
 	private MovePlayerByClickingAndroidScript moveByClickingScript;
 
 	private static GameObject selectedObj = null;
+	private Vector3 currentTouchPoint;
+	private Vector3 previousTouchPoint;
+	private Quaternion originalRotation;
+	private Quaternion offsetRotation;
+	private bool setOriginalRotation;
 	private float singleTapDuration = 0;
 	private bool singleTapActive = false;
 	private Touch singleTapTouch;
@@ -26,6 +31,10 @@ public class multiTouchBehaviour : MonoBehaviour {
 		rotatePlayerScript = FindObjectOfType<RotatePlayerAndroidScript>();
 		movePlayerScript = FindObjectOfType<MovePlayerForwardBackwardAndroidScript>();
 		moveByClickingScript = FindObjectOfType<MovePlayerByClickingAndroidScript>();
+
+		currentTouchPoint = new Vector3(0,0,0);
+		previousTouchPoint = new Vector3(0,0,0);
+		setOriginalRotation = true;
 	} //end Start()
 	
 	// Update is called once per frame
@@ -61,9 +70,15 @@ public class multiTouchBehaviour : MonoBehaviour {
 						performActionSingleTouchDoubleTap(touch);
 					}
 				} else if (touch.phase == TouchPhase.Moved) {
+					previousTouchPoint = currentTouchPoint;
+					currentTouchPoint.x = touch.position.x;
+					currentTouchPoint.y = touch.position.y;
 					performActionSingleTouchSingleMove(touch);
 					touchMoved = true;
 				} else if (touch.phase == TouchPhase.Began) {
+					setOriginalRotation = true;
+					currentTouchPoint.x = touch.position.x;
+					currentTouchPoint.y = touch.position.y;
 					touchMoved = false;
 				}
 			}
@@ -114,6 +129,10 @@ public class multiTouchBehaviour : MonoBehaviour {
 			singleTouchGesture (touch); //= Input.GetTouch(0)
 		} //end singleTouch			
 		else { //selectedObj == null			
+			/*Vector3 movement = new Vector3(touch.position.x, touch.position.y, 0f);
+			moveByClickingScript.movePlayer(movement);*/
+
+
 			float rotationY = touch.deltaPosition.y * Time.deltaTime * 10.0f;
 			rotationY = Mathf.Clamp (rotationY, -90, 90);
 			float rotationX = touch.deltaPosition.x * Time.deltaTime * 10.0f;
@@ -228,21 +247,54 @@ public class multiTouchBehaviour : MonoBehaviour {
 		string tag = selectedObj.tag;
 		float deltaPos;
 		if (selectedObj != null) {
+
+			Vector3 FirstPos = Camera.main.WorldToScreenPoint(selectedObj.transform.position);
+			currentTouchPoint.z = FirstPos.z;
+			previousTouchPoint.z = FirstPos.z;
+			Vector3 currentPos = Camera.main.ScreenToWorldPoint(currentTouchPoint);
+			Vector3 prevPos = Camera.main.ScreenToWorldPoint(previousTouchPoint);
+
 			if (tag == "moveX") {
-				deltaPos = touch.deltaPosition.x / 80;
-				selectedObj.transform.Translate (Vector3.right * deltaPos, Space.Self);
+				float difference = currentPos.x - prevPos.x;
+				selectedObj.transform.rigidbody.AddRelativeForce(new Vector3(difference * 500, 0, 0));
+
+				//deltaPos = touch.deltaPosition.x / 80;
+				//selectedObj.transform.Translate (Vector3.right * deltaPos, Space.Self);
 				
 			} else if (tag == "moveY") {
-				deltaPos = touch.deltaPosition.y / 80;
-				selectedObj.transform.Translate (Vector3.up * deltaPos, Space.Self);
+				float difference = currentPos.y - prevPos.y;
+				selectedObj.transform.rigidbody.AddRelativeForce(new Vector3(0, difference * 500, 0));
+
+				//deltaPos = touch.deltaPosition.y / 80;
+				//selectedObj.transform.Translate (Vector3.up * deltaPos, Space.Self);
 				
 			} else if (tag == "moveZ") {
-				deltaPos = touch.deltaPosition.y / 80;
-				selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
+				float difference = currentPos.z - prevPos.z;
+				selectedObj.transform.rigidbody.AddRelativeForce(new Vector3(0, 0, difference * 500));
+
+				//deltaPos = touch.deltaPosition.y / 80;
+				//selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
 			
 			} else if (tag == "rotate") {
-				deltaPos = touch.deltaPosition.y;
-				selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
+				/*if(setOriginalRotation) {
+					originalRotation = selectedObj.transform.rotation;
+					Vector3 firstPosition = selectedObj.transform.position;
+					Vector3 currentDir = currentPos - firstPosition;
+					offsetRotation = Quaternion.Inverse (Quaternion.LookRotation (currentDir));
+					setOriginalRotation = false;
+				}
+				Vector3 direction = currentPos - prevPos;
+				Quaternion newRotation = Quaternion.LookRotation (direction) * originalRotation * offsetRotation;
+				newRotation.y = originalRotation.y;
+				newRotation.z = originalRotation.z;
+				selectedObj.transform.rotation = newRotation;*/
+
+				Vector3 direction = currentPos - prevPos;
+
+				selectedObj.transform.rigidbody.AddRelativeTorque(direction*100);
+
+				//deltaPos = touch.deltaPosition.y;
+				//selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
 					
 			} else {
 				print ("ERROR: obj does not react on single touch");
