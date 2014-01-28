@@ -13,6 +13,9 @@ public class GUI_Manager : MonoBehaviour {
 	private GUI_Button aButton_MainMenu_LoadLevel1;
 	private GUI_Button aButton_MainMenu_LoadLevel2;
 	private GUI_Button aButton_MainMenu_LoadLevel3;
+	private GUI_Button aButton_MainMenu_LoadLevel4;
+	private GUI_Button aButton_MainMenu_LoadLevel5;
+	private GUI_Button aButton_MainMenu_LoadLevel6;
 	private GUI_Button aButton_MainMenu_Credits;
 	private GUI_Button aButton_MainMenu_Quit;
 	private GUI_Button aButton_MainMenu_Help;
@@ -25,6 +28,9 @@ public class GUI_Manager : MonoBehaviour {
 		aButton_MainMenu_LoadLevel1 = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_LoadLevel1").GetComponent<GUI_Button>();
 		aButton_MainMenu_LoadLevel2 = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_LoadLevel2").GetComponent<GUI_Button>();
 		aButton_MainMenu_LoadLevel3 = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_LoadLevel3").GetComponent<GUI_Button>();
+		aButton_MainMenu_LoadLevel4 = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_LoadLevel4").GetComponent<GUI_Button>();
+		aButton_MainMenu_LoadLevel5 = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_LoadLevel5").GetComponent<GUI_Button>();
+		aButton_MainMenu_LoadLevel6 = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_LoadLevel6").GetComponent<GUI_Button>();
 		aButton_MainMenu_Credits = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_Credits").GetComponent<GUI_Button>();
 		aButton_MainMenu_Quit = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_Quit").GetComponent<GUI_Button>();
 		aButton_MainMenu_Help = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_Help").GetComponent<GUI_Button>();
@@ -35,6 +41,9 @@ public class GUI_Manager : MonoBehaviour {
 		aButton_MainMenu_LoadLevel1.FireButtonEventWithString += LoadLevel;
 		aButton_MainMenu_LoadLevel2.FireButtonEventWithString += LoadLevel;
 		aButton_MainMenu_LoadLevel3.FireButtonEventWithString += LoadLevel;
+		aButton_MainMenu_LoadLevel4.FireButtonEventWithString += LoadLevel;
+		aButton_MainMenu_LoadLevel5.FireButtonEventWithString += LoadLevel;
+		aButton_MainMenu_LoadLevel6.FireButtonEventWithString += LoadLevel;
 		aButton_MainMenu_Credits.FireButtonEvent += GoToCredits;
 		aButton_MainMenu_Quit.FireButtonEvent += QuitApplication;
 		aButton_MainMenu_Help.FireButtonEvent += GoToHelp;
