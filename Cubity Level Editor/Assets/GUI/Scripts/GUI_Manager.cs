@@ -20,6 +20,14 @@ public class GUI_Manager : MonoBehaviour {
 	private GUI_Button aButton_MainMenu_Quit;
 	private GUI_Button aButton_MainMenu_Help;
 	private GUI_Button aButton_Help_Back;
+	private GUI_Button aButton_Help_Next;
+	private GUI_Button aButton_Help2_Back;
+	private GUI_Button aButton_Help2_Use;
+	private GUI_Button aButton_Help2_Next;
+	private GUI_Button aButton_Help2_Prev;
+	private GUI_Button aButton_Help3_Back;
+	private GUI_Button aButton_Help3_Use;
+	private GUI_Button aButton_Help3_Prev;
 	private GUI_Button aButton_Credits_Back;
 	
 	void Start()
@@ -35,6 +43,14 @@ public class GUI_Manager : MonoBehaviour {
 		aButton_MainMenu_Quit = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_Quit").GetComponent<GUI_Button>();
 		aButton_MainMenu_Help = GameObject.Find("3DGUI/3DGUI Container/MainMenu/BTN_Help").GetComponent<GUI_Button>();
 		aButton_Help_Back = GameObject.Find("3DGUI/3DGUI Container/Help/BTN_Back").GetComponent<GUI_Button>();
+		aButton_Help_Next = GameObject.Find("3DGUI/3DGUI Container/Help/BTN_Next").GetComponent<GUI_Button>();
+		aButton_Help2_Back = GameObject.Find("3DGUI/3DGUI Container/Help2/BTN_Back").GetComponent<GUI_Button>();
+		aButton_Help2_Use = GameObject.Find("3DGUI/3DGUI Container/Help2/BTN_Use").GetComponent<GUI_Button>();
+		aButton_Help2_Next = GameObject.Find("3DGUI/3DGUI Container/Help2/BTN_Next").GetComponent<GUI_Button>();
+		aButton_Help2_Prev = GameObject.Find("3DGUI/3DGUI Container/Help2/BTN_Prev").GetComponent<GUI_Button>();
+		aButton_Help3_Back = GameObject.Find("3DGUI/3DGUI Container/Help3/BTN_Back").GetComponent<GUI_Button>();
+		aButton_Help3_Use = GameObject.Find("3DGUI/3DGUI Container/Help3/BTN_Use").GetComponent<GUI_Button>();
+		aButton_Help3_Prev = GameObject.Find("3DGUI/3DGUI Container/Help3/BTN_Prev").GetComponent<GUI_Button>();
 		aButton_Credits_Back = GameObject.Find("3DGUI/3DGUI Container/Credits/BTN_Back").GetComponent<GUI_Button>();
 		
 		aButton_MainMenu_Continue.FireButtonEvent += ResumeGame;
@@ -48,6 +64,15 @@ public class GUI_Manager : MonoBehaviour {
 		aButton_MainMenu_Quit.FireButtonEvent += QuitApplication;
 		aButton_MainMenu_Help.FireButtonEvent += GoToHelp;
 		aButton_Help_Back.FireButtonEvent += GoToMainMenu;
+		aButton_Help_Next.FireButtonEvent += GoToHelp2;
+		aButton_Help2_Back.FireButtonEvent += GoToMainMenu;
+		aButton_Help2_Use.FireButtonEventWithString += ChangeControlsMode;
+		aButton_Help2_Next.FireButtonEvent += GoToHelp3;
+		aButton_Help2_Prev.FireButtonEvent += GoToHelp;
+		aButton_Help3_Back.FireButtonEvent += GoToMainMenu;
+		aButton_Help3_Use.FireButtonEventWithString += ChangeControlsMode;
+		aButton_Help3_Prev.FireButtonEvent += GoToHelp2;
+
 		aButton_Credits_Back.FireButtonEvent += GoToMainMenu;
 
 		m_layerContainer.DeactivateAllLayers();
@@ -107,11 +132,37 @@ public class GUI_Manager : MonoBehaviour {
 		CloseAllMenus();
 		OpenMenu("Help");
 	}
+
+	public void GoToHelp2 (GameObject theSender)
+	{
+		CloseAllMenus();
+		OpenMenu("Help2");
+	}
+
+	public void GoToHelp3 (GameObject theSender)
+	{
+		CloseAllMenus();
+		OpenMenu("Help3");
+	}
 	
 	public void GoToMainMenu(GameObject theSender)
 	{
 		CloseAllMenus();
 		OpenMenu(m_defaultLayer);
+	}
+
+	public void ChangeControlsMode (GameObject theSender, string theValue)
+	{
+		switch(theValue)
+		{
+			case "Mode1":
+				m_gameManager.ChangePlayerControls(PlayerControls.EControlsMode.POINT_AND_CLICK);
+				break;
+			case "Mode2":
+				m_gameManager.ChangePlayerControls(PlayerControls.EControlsMode.SWIPE);
+				break;
+		}
+		ResumeGame(theSender);
 	}
 	
 	public void LoadLevel(GameObject theSender, string levelName)

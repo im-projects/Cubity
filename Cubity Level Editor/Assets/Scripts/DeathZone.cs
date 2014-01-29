@@ -13,7 +13,7 @@ public class DeathZone : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider theCollider)
 	{
-		if(theCollider.gameObject.tag.Equals("Player"))
+		if(theCollider.gameObject.tag.Equals("Player") && !m_gameManager.GetDeathAnimationRunning())
 		{
 			m_gameManager.StartCoroutine("BackgroundTransition");
 		}

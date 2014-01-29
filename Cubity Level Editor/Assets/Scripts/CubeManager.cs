@@ -11,6 +11,13 @@ public class CubeManager : MonoBehaviour {
 	public Material materialZ;
 	public Material materialZActive;
 
+	public float maxScaleX = 6;
+	public float maxScaleY = 6;
+	public float maxScaleZ = 6;
+	public float minScaleX = 4;
+	public float minScaleY = 4;
+	public float minScaleZ = 4;
+
 	private bool isSelected = false;
 	
 	public enum ECubeType
