@@ -11,9 +11,6 @@ public class multiTouchBehaviour : MonoBehaviour {
 	private static GameObject selectedObj = null;
 	private Vector3 currentTouchPoint;
 	private Vector3 previousTouchPoint;
-	private Quaternion originalRotation;
-	private Quaternion offsetRotation;
-	private bool setOriginalRotation;
 	private float singleTapDuration = 0;
 	private bool singleTapActive = false;
 	private Touch singleTapTouch;
@@ -34,7 +31,6 @@ public class multiTouchBehaviour : MonoBehaviour {
 
 		currentTouchPoint = new Vector3(0,0,0);
 		previousTouchPoint = new Vector3(0,0,0);
-		setOriginalRotation = true;
 	} //end Start()
 	
 	// Update is called once per frame
@@ -74,7 +70,6 @@ public class multiTouchBehaviour : MonoBehaviour {
 					performActionSingleTouchSingleMove(touch);
 					touchMoved = true;
 				} else if (touch.phase == TouchPhase.Began) {
-					setOriginalRotation = true;
 					currentTouchPoint.x = touch.position.x;
 					currentTouchPoint.y = touch.position.y;
 					touchMoved = false;
@@ -274,25 +269,25 @@ public class multiTouchBehaviour : MonoBehaviour {
 				//selectedObj.transform.Translate (Vector3.forward * deltaPos, Space.Self);
 			
 			} else if (tag == "rotate") {
-				/*if(setOriginalRotation) {
-					originalRotation = selectedObj.transform.rotation;
-					Vector3 firstPosition = selectedObj.transform.position;
-					Vector3 currentDir = currentPos - firstPosition;
-					offsetRotation = Quaternion.Inverse (Quaternion.LookRotation (currentDir));
-					setOriginalRotation = false;
-				}
-				Vector3 direction = currentPos - prevPos;
-				Quaternion newRotation = Quaternion.LookRotation (direction) * originalRotation * offsetRotation;
-				newRotation.y = originalRotation.y;
-				newRotation.z = originalRotation.z;
-				selectedObj.transform.rotation = newRotation;*/
+				Vector3 center = selectedObj.transform.position;
+				Vector3 camera = Camera.main.transform.position;
 
-				Vector3 direction = currentPos - prevPos;
+				Vector3 camVector = camera - center;
 
-				selectedObj.transform.rigidbody.AddRelativeTorque(direction*100);
+				Vector3 targetDelta = currentPos - prevPos;
+				
+				//get the angle between transform.forward and target delta
+				float angleDiff = Vector3.Angle(camVector, targetDelta);
+				
+				// get its cross product, which is the axis of rotation to
+				// get from one vector to the other
+				Vector3 cross = Vector3.Cross(camVector, targetDelta);
+				
+				// apply torque along that axis according to the magnitude of the angle.
 
-				//deltaPos = touch.deltaPosition.y;
-				//selectedObj.transform.Rotate (Vector3.right * deltaPos, Space.Self);
+				Vector3 dragVector = cross * angleDiff;
+				
+				selectedObj.transform.rigidbody.AddRelativeTorque(dragVector);
 					
 			} else {
 				print ("ERROR: obj does not react on single touch");
